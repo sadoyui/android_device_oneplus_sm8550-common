@@ -61,6 +61,7 @@ persist.vendor.qcom.bluetooth.a2dp_offload_cap=sbc-aptx-aptxtws-aptxhd-aac-ldac-
 persist.vendor.qcom.bluetooth.aac_frm_ctl.enabled=true
 persist.vendor.qcom.bluetooth.aptxadaptiver2_1_support=true
 ro.bluetooth.a2dp_offload.supported=true
+bluetooth.device.default_name=OnePlus Ace 2 Pro
 
 # Chipset
 ro.soc.manufacturer=QTI
@@ -130,6 +131,8 @@ ro.surface_flinger.protected_contents=true
 ro.surface_flinger.use_color_management=true
 ro.surface_flinger.use_content_detection_for_refresh_rate=true
 ro.surface_flinger.wcg_composition_dataspace=143261696
+ro.surface_flinger.set_idle_timer_ms=250
+ro.surface_flinger.set_touch_timer_ms=300
 
 # Incremental FS
 ro.incremental.enable=yes
@@ -170,6 +173,7 @@ vendor.usb.rmnet.inst.name=rmnet
 vendor.usb.rndis.func.name=gsi
 vendor.usb.use_ffs_mtp=1
 vendor.usb.use_gadget_hal=0
+vendor.usb.product_string=OnePlus Ace 2 Pro
 
 # WiFi
 wifi.aware.interface=wifi-aware0

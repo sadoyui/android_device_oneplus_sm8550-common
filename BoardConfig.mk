@@ -7,7 +7,7 @@
 BUILD_BROKEN_DUP_RULES := true
 BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
 
-COMMON_PATH := device/oneplus/sm8550-common
+DEVICE_PATH := device/oneplus/xigua
 
 # A/B
 AB_OTA_UPDATER := true
@@ -67,12 +67,15 @@ TARGET_USES_QCOM_MM_AUDIO := true
 TARGET_BOOTLOADER_BOARD_NAME := kalama
 
 # Bluetooth
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(COMMON_PATH)/bluetooth/include
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_PATH)/bluetooth/include
 
 # Boot
 BOARD_BOOT_HEADER_VERSION := 4
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 BOARD_RAMDISK_USE_LZ4 := true
+
+# Display
+TARGET_SCREEN_DENSITY := 450
 
 # DTB / DTBO
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
@@ -80,32 +83,32 @@ BOARD_USES_QCOM_MERGE_DTBS_SCRIPT := true
 TARGET_NEEDS_DTBOIMAGE := true
 
 # Properties
-TARGET_ODM_PROP += $(COMMON_PATH)/odm.prop
-TARGET_PRODUCT_PROP += $(COMMON_PATH)/product.prop
-TARGET_SYSTEM_EXT_PROP += $(COMMON_PATH)/system_ext.prop
-TARGET_VENDOR_PROP += $(COMMON_PATH)/vendor.prop
+TARGET_ODM_PROP += $(DEVICE_PATH)/odm.prop
+TARGET_PRODUCT_PROP += $(DEVICE_PATH)/product.prop
+TARGET_SYSTEM_EXT_PROP += $(DEVICE_PATH)/system_ext.prop
+TARGET_VENDOR_PROP += $(DEVICE_PATH)/vendor.prop
 
 # Filesystem
-TARGET_FS_CONFIG_GEN := $(COMMON_PATH)/config.fs
+TARGET_FS_CONFIG_GEN := $(DEVICE_PATH)/config.fs
 
 # Fingerprint
 TARGET_SURFACEFLINGER_UDFPS_LIB := //hardware/oplus:libudfps_extension.oplus
 
 # HIDL
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := \
-    $(COMMON_PATH)/device_framework_matrix.xml \
+    $(DEVICE_PATH)/device_framework_matrix.xml \
     hardware/qcom-caf/common/vendor_framework_compatibility_matrix.xml \
     vendor/lineage/config/device_framework_matrix.xml
-DEVICE_MATRIX_FILE := $(COMMON_PATH)/compatibility_matrix.xml
+DEVICE_MATRIX_FILE := $(DEVICE_PATH)/compatibility_matrix.xml
 DEVICE_MANIFEST_FILE := \
-    $(COMMON_PATH)/manifest.xml \
-    $(COMMON_PATH)/network_manifest.xml
+    $(DEVICE_PATH)/manifest.xml \
+    $(DEVICE_PATH)/network_manifest.xml
 ODM_MANIFEST_FILES := \
-    $(COMMON_PATH)/manifest_odm.xml \
-    $(COMMON_PATH)/network_manifest_odm.xml
+    $(DEVICE_PATH)/manifest_odm.xml \
+    $(DEVICE_PATH)/network_manifest_odm.xml
 
 # Init
-TARGET_INIT_VENDOR_LIB := //$(COMMON_PATH):libinit_oplus
+TARGET_INIT_VENDOR_LIB := //$(DEVICE_PATH):libinit_oplus
 
 # Init Boot
 BOARD_INIT_BOOT_HEADER_VERSION := 4
@@ -127,17 +130,18 @@ TARGET_KERNEL_SOURCE := kernel/oneplus/sm8550
 TARGET_KERNEL_CONFIG := \
     gki_defconfig \
     vendor/kalama_GKI.config \
-    vendor/oplus/kalama_GKI.config
+    vendor/oplus/kalama_GKI.config \
+    vendor/oplus/xigua.config
 
 # Kernel modules
-BOARD_SYSTEM_KERNEL_MODULES := $(strip $(shell cat $(COMMON_PATH)/modules.include.system_dlkm))
-BOARD_SYSTEM_KERNEL_MODULES_LOAD := $(strip $(shell cat $(COMMON_PATH)/modules.load.system_dlkm))
-BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE := $(COMMON_PATH)/modules.blocklist
-BOARD_VENDOR_KERNEL_MODULES_LOAD := $(strip $(shell cat $(COMMON_PATH)/modules.load))
+BOARD_SYSTEM_KERNEL_MODULES := $(strip $(shell cat $(DEVICE_PATH)/modules.include.system_dlkm))
+BOARD_SYSTEM_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/modules.load.system_dlkm))
+BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE := $(DEVICE_PATH)/modules.blocklist
+BOARD_VENDOR_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/modules.load))
 BOARD_VENDOR_RAMDISK_KERNEL_MODULES_BLOCKLIST_FILE := $(BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE)
-BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(strip $(shell cat $(COMMON_PATH)/modules.load.vendor_boot))
-BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(strip $(shell cat $(COMMON_PATH)/modules.load.recovery))
-BOOT_KERNEL_MODULES := $(strip $(shell cat $(COMMON_PATH)/modules.load.recovery $(COMMON_PATH)/modules.include.vendor_ramdisk))
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/modules.load.vendor_boot))
+BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/modules.load.recovery))
+BOOT_KERNEL_MODULES := $(strip $(shell cat $(DEVICE_PATH)/modules.load.recovery $(DEVICE_PATH)/modules.include.vendor_ramdisk))
 
 TARGET_KERNEL_EXT_MODULE_ROOT := kernel/oneplus/sm8550-modules
 TARGET_KERNEL_EXT_MODULES := \
@@ -215,10 +219,11 @@ TARGET_TAP_TO_WAKE_NODE := "/proc/touchpanel/double_tap_enable"
 
 # Recovery
 BOARD_EXCLUDE_KERNEL_FROM_RECOVERY_IMAGE := true
-TARGET_RECOVERY_FSTAB := $(COMMON_PATH)/init/fstab.default
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/init/fstab.default
 TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
+TARGET_RECOVERY_UI_MARGIN_HEIGHT := 103
 
 # RIL
 ENABLE_VENDOR_RIL_SERVICE := true
@@ -234,7 +239,7 @@ include hardware/oplus/sepolicy/qti/SEPolicy.mk
 # Touch
 SOONG_CONFIG_NAMESPACES += OPLUS_LINEAGE_TOUCH_HAL
 SOONG_CONFIG_OPLUS_LINEAGE_TOUCH_HAL := INCLUDE_DIR
-SOONG_CONFIG_OPLUS_LINEAGE_TOUCH_HAL_INCLUDE_DIR := $(COMMON_PATH)/touch/include
+SOONG_CONFIG_OPLUS_LINEAGE_TOUCH_HAL_INCLUDE_DIR := $(DEVICE_PATH)/touch/include
 
 # Verified Boot
 BOARD_AVB_ENABLE := true
@@ -295,4 +300,4 @@ WIFI_HIDL_UNIFIED_SUPPLICANT_SERVICE_RC_ENTRY := true
 WPA_SUPPLICANT_VERSION := VER_0_8_X
 
 # Include the proprietary files BoardConfig.
-include vendor/oneplus/sm8550-common/BoardConfigVendor.mk
+include vendor/oneplus/xigua/BoardConfigVendor.mk
